@@ -1,7 +1,12 @@
 package com.anna.sent.soft.supportablealgorithms;
 
+import java.security.Provider;
+import java.security.Security;
+import java.util.Set;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,6 +15,15 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		Provider[] providers = Security.getProviders();
+		for (Provider provider : providers) {
+			Log.i("CRYPTO", "provider: " + provider.getName());
+			Set<Provider.Service> services = provider.getServices();
+			for (Provider.Service service : services) {
+				Log.i("CRYPTO", "  algorithm: " + service.getAlgorithm());
+			}
+		}
 	}
 
 	@Override
