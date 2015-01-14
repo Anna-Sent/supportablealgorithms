@@ -6,9 +6,9 @@ import java.util.Set;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	@Override
@@ -16,14 +16,23 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		StringBuilder sb = new StringBuilder();
+
 		Provider[] providers = Security.getProviders();
 		for (Provider provider : providers) {
-			Log.i("CRYPTO", "provider: " + provider.getName());
+			sb.append("provider: " + provider.getName());
+			sb.append("\n");
 			Set<Provider.Service> services = provider.getServices();
 			for (Provider.Service service : services) {
-				Log.i("CRYPTO", "  algorithm: " + service.getAlgorithm());
+				sb.append("  algorithm: " + service.getAlgorithm());
+				sb.append("\n");
 			}
+
+			sb.append("\n");
 		}
+
+		TextView tv = (TextView) findViewById(R.id.textView);
+		tv.setText(sb.toString());
 	}
 
 	@Override
